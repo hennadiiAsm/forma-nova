@@ -1,0 +1,29 @@
+#spring:
+#  r2dbc:
+#    name: users
+#    url: r2dbc:h2:mem:///users
+#    username: sa
+#    password:
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/analysis?currentSchema=user-service
+#    username: postgres
+#    password: fghTKM21041998.
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#    open-in-view: true
+#flyway:
+#  url: jdbc:postgresql://localhost:5432/analysis
+#  schemas: user-service
+#  user: postgres
+#  password: fghTKM21041998.
+#logging:
+#  level:
+#    web: debug
+#    sql: debug
+#    root: debug

@@ -1,0 +1,59 @@
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+    <persistence-unit name="postgresql">
+        <provider>org.hibernate.reactive.provider.ReactivePersistenceProvider</provider>
+
+        <class>com.formanova.user.persistence.entity.UserEntity</class>
+        <class>com.formanova.user.persistence.entity.PaymentCardEntity</class>
+
+        <properties>
+
+            <!-- PostgreSQL -->
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:postgresql://localhost:5432/analysis"/>
+
+            <!-- Credentials -->
+            <property name="jakarta.persistence.jdbc.user"
+                      value="postgres"/>
+            <property name="jakarta.persistence.jdbc.password"
+                      value="fghTKM21041998."/>
+
+            <!-- The Vert.x SQL Client connection pool size -->
+<!--            <property name="hibernate.connection.pool_size"-->
+<!--                      value="10"/>-->
+
+            <!-- Automatic schema export -->
+            <!--            If create, first drop the schema and then export tables, sequences, and constraints.-->
+            <!--            If create-only, export tables, sequences, and constraints.-->
+            <!--            If create-drop, drop the schema and recreate it on SessionFactory startup. Additionally, drop the schema on SessionFactory shutdown.-->
+            <!--            If drop, drop the schema on SessionFactory shutdown.-->
+            <!--            If validate, validate the database schema without changing it.-->
+            <!--            If update, only export what’s missing in the schema.-->
+            <property name="jakarta.persistence.schema-generation.database.action"
+                      value="update"/>
+
+            <!-- (Optional) If true, automatically create schemas and catalogs -->
+<!--            <property name="jakarta.persistence.create-database-schemas" value=""/>-->
+
+            <!-- (Optional) If metadata-then-script or script-then-metadata, execute an additional SQL script when exported tables and sequences -->
+<!--            <property name="jakarta.persistence.schema-generation.create-source" value=""/>-->
+
+<!--             (Optional) The name of the SQL script to be executed -->
+<!--            <property name="jakarta.persistence.schema-generation.create-script-source" value=""/>-->
+
+
+            <!-- SQL statement logging -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="true"/>
+
+            <property name="hibernate.default_schema" value="user_service"/>
+
+        </properties>
+
+    </persistence-unit>
+
+</persistence>

@@ -21,19 +21,26 @@ repositories {
 	mavenCentral()
 }
 
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.3")
+	}
+}
+
 dependencies {
+
+//	implementation(project(":common"))
+	implementation(files("../common/build/libs/common-0.0.1-SNAPSHOT.jar"))
 
 	// Spring support
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka")
 //	implementation("org.springframework.boot:spring-boot-starter-actuator")
 //	developmentOnly("org.springframework.boot:spring-boot-devtools")
-//	implementation("org.springframework.boot:spring-boot-starter-security")
-//	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 //	implementation("org.springframework.boot:spring-boot-starter-hateoas")
+//	implementation("org.springframework.boot:spring-boot-starter-security")
 //	implementation("org.springframework.session:spring-session-core")
-//	implementation("org.springframework.kafka:spring-kafka")
-//	implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
 
 	// Hibernate-reactive support
 	implementation("io.vertx:vertx-pg-client:4.4.6")
@@ -43,20 +50,42 @@ dependencies {
 	implementation("io.smallrye.reactive:mutiny-zero-flow-adapters:1.0.0")
 	compileOnly("org.hibernate.orm:hibernate-jpamodelgen")
 
-//	implementation("org.flywaydb:flyway-core")
-
 	// Lombok
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 
+//	implementation("org.flywaydb:flyway-core")
+
 	// Testing support
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
+	testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder")
 //	testImplementation("org.springframework.kafka:spring-kafka-test")
 //	testImplementation("org.springframework.security:spring-security-test")
 
 }
+//springBoot {
+//	mainClass.set("com.formanova.user.UserServiceApplication")
+//}
 
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+//tasks.bootJar {
+//	manifest {
+//		attributes(Pair("Main-Class", "com.formanova.user.UserServiceApplication"))
+//	}
+//}
+//
+//tasks.jar {
+//	manifest {
+//		attributes(Pair("Main-Class", "com.formanova.user.UserServiceApplication"))
+//	}
+//	val dependencies = configurations
+//			.compileClasspath
+//			.get()
+//			.map(::zipTree) // OR .map { zipTree(it) }
+//	from(dependencies)
+//	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+//}

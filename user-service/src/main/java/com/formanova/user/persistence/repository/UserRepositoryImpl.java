@@ -2,6 +2,9 @@ package com.formanova.user.persistence.repository;
 
 
 import com.formanova.user.persistence.entity.UserEntity;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaDelete;
+import jakarta.persistence.criteria.Root;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.reactive.mutiny.Mutiny;
@@ -50,4 +53,19 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    @Override
+    public Mono<Void> deleteById(Long id) {
+
+        CriteriaBuilder cb = this.sessionFactory.getCriteriaBuilder();
+        CriteriaDelete<UserEntity> criteriaDelete = cb.createCriteriaDelete(UserEntity.class);
+        Root<UserEntity> root = criteriaDelete.from(UserEntity.class);
+
+        criteriaDelete.where(cb.equal(root.get("id"), id));
+
+        return sessionFactory
+                .withTransaction((session, tx) -> session.createQuery(criteriaDelete)
+                        .executeUpdate())
+                .convert().with(toMono())
+                .then();
+    }
 }

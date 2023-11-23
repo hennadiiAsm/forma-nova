@@ -12,8 +12,11 @@
         <properties>
 
             <!-- PostgreSQL -->
+            <!-- Inside docker, I'm forced to use IP address since the following issue:
+            https://github.com/docker/for-win/issues/12673 -->
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:postgresql://localhost:5432/analysis"/>
+                                              value="jdbc:postgresql://192.168.65.254:5432/analysis"/>
+            <!--                                              value="jdbc:postgresql://localhost:5432/analysis"/>-->
 
             <!-- Credentials -->
             <property name="jakarta.persistence.jdbc.user"

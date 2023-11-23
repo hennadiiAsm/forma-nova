@@ -1,6 +1,6 @@
 package com.formanova.user.api.mapper;
 
-import com.formanova.user.api.dto.UserDto;
+import com.formanova.common.dto.UserDto;
 import com.formanova.user.persistence.entity.UserEntity;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

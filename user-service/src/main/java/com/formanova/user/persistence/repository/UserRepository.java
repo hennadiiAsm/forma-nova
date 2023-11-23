@@ -12,4 +12,6 @@ public interface UserRepository {
 
     Mono<UserEntity> save(UserEntity userEntity);
 
+    Mono<Void> deleteById(Long id);
+
 }

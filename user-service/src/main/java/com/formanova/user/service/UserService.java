@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.lang.annotation.Annotation;
+
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class UserService {
@@ -20,6 +22,10 @@ public class UserService {
 
     public Mono<UserEntity> save(UserEntity user) {
        return userRepository.save(user);
+    }
+
+    public Mono<Void> deleteById(Long id) {
+        return userRepository.deleteById(id);
     }
 
 }

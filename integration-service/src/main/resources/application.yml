@@ -1,0 +1,43 @@
+server:
+  port: 8081
+  error:
+    include-message: always
+
+spring.cloud.stream:
+  default-binder: kafka
+#  default.contentType: application/json
+  bindings:
+    users-out-0:
+      destination: users
+      content-type: application/json
+      group: usersGroup
+      producer:
+        required-groups: auditGroup
+        partition-key-expression: headers['partitionKey']
+        partition-count: 2
+
+#    recommendations-out-0:
+#      destination: recommendations
+#      producer:
+#        required-groups: auditGroup
+#    reviews-out-0:
+#      destination: reviews
+#      producer:
+#        required-groups: auditGroup
+
+spring.cloud.stream.kafka.binder:
+  brokers: 127.0.0.1
+  defaultBrokerPort: 9092
+
+#spring.rabbitmq:
+#  host: 127.0.0.1
+#  port: 5672
+#  username: guest
+#  password: guest
+
+logging:
+  level:
+    root: INFO
+
+management.endpoint.health.show-details: "ALWAYS"
+management.endpoints.web.exposure.include: "*"

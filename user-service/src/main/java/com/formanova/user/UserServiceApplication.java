@@ -1,6 +1,6 @@
 package com.formanova.user;
 
-import com.formanova.user.api.dto.PaymentCardDto;
+import com.formanova.common.dto.PaymentCardDto;
 import com.formanova.user.api.mapper.PaymentCardMapper;
 import com.formanova.user.persistence.entity.UserEntity;
 import com.formanova.user.service.UserService;
@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -39,7 +38,7 @@ public class UserServiceApplication {
 //                            .subscribe(System.out::println);
 
             userService.save(build)
-                    .subscribe(c -> log.warn(String.valueOf(c)));
+                    .subscribe();
         };
     }
 

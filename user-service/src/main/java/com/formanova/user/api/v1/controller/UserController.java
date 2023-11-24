@@ -1,7 +1,8 @@
 package com.formanova.user.api.v1.controller;
 
 
-import com.formanova.common.dto.UserDto;
+import com.formanova.common.dto.user.UserPrivateDto;
+import com.formanova.common.dto.user.UserRegistrationDto;
 import com.formanova.user.api.mapper.UserMapper;
 import com.formanova.user.persistence.entity.UserEntity;
 import com.formanova.user.service.UserService;
@@ -26,16 +27,18 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping("/{id}")
-    Mono<ResponseEntity<UserDto>> getById(@PathVariable Long id) {
+    Mono<ResponseEntity<UserPrivateDto>> getById(@PathVariable Long id) {
+
         return userService.getById(id)
-                .map(userMapper::toDto)
+                .map(userMapper::toPrivateDto)
                 .map(ResponseEntity::ok)
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
     @PostMapping
-    Mono<ResponseEntity<Void>> register(@RequestBody @Valid Mono<UserDto> userDto,
-                                  UriComponentsBuilder ucb) {
+    Mono<ResponseEntity<Void>> register(@RequestBody @Valid Mono<UserRegistrationDto> userDto,
+                                        UriComponentsBuilder ucb) {
+
         return userDto
                 .doOnError(Throwable::printStackTrace)
                 .map(userMapper::toEntity)

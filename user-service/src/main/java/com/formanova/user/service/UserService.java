@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.lang.annotation.Annotation;
-
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class UserService {

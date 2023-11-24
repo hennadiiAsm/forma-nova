@@ -1,7 +1,8 @@
 package com.formanova.integration.client;
 
 import com.formanova.common.Event;
-import com.formanova.common.dto.UserDto;
+import com.formanova.common.dto.user.UserPublicDto;
+import com.formanova.common.dto.user.UserRegistrationDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
@@ -36,17 +37,17 @@ public class IntegrationClient {
         this.userServiceUrl = userServiceScheme + "://" + userServiceDomain + ":" + userServicePort;
     }
 
-    public Mono<ResponseEntity<UserDto>> getUserById(Long id) {
+    public Mono<ResponseEntity<UserPublicDto>> getUserById(Long id) {
 
         return webClient.get().uri(userServiceUrl + "/users/{id}", id)
                 .retrieve()
-                .toEntity(UserDto.class);
+                .toEntity(UserPublicDto.class);
     }
 
-    public Mono<Void> saveUser(UserDto userDto) {
+    public Mono<Void> createUser(UserRegistrationDto userDto) {
 
         return Mono.fromRunnable(() -> {
-            var event = new Event<>(Event.Type.CREATE, userDto.getId(), userDto);
+            var event = new Event<>(Event.Type.CREATE, null, userDto);
             sendMessage("users-out-0", event);
         }).subscribeOn(Schedulers.boundedElastic()).then();
     }

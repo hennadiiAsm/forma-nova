@@ -1,31 +1,20 @@
-package com.formanova.common.dto;
+package com.formanova.common.dto.user;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor(onConstructor_={@JsonCreator})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class UserDto {
-
-    @EqualsAndHashCode.Include
-    @Setter(AccessLevel.NONE)
-    private Long id;
+public class UserPublicDto {
 
     @Email(regexp = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$") // RFC 5322
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Include
     private String email;
-
-    @NotBlank
-    private String password;
 
     @NotBlank
     private String firstName;
@@ -33,23 +22,19 @@ public class UserDto {
     @NotBlank
     private String lastName;
 
-    @NotNull
-    private LocalDate birthDate;
-
-    private Set<@Valid PaymentCardDto> paymentCards;
-
     private String phoneNumber;
 
     private String country;
 
     private String city;
 
-    public UserDto(String email, String password, String firstName, String lastName, @NotNull LocalDate birthDate) {
+    public UserPublicDto(String email,
+                         String firstName,
+                         String lastName) {
+
         this.email = email;
-        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthDate = birthDate;
     }
 
 }

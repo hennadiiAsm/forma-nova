@@ -1,9 +1,7 @@
 package com.formanova.user.api.messaging;
 
-import java.util.function.Consumer;
-
 import com.formanova.common.Event;
-import com.formanova.common.dto.UserDto;
+import com.formanova.common.dto.user.UserRegistrationDto;
 import com.formanova.user.api.mapper.UserMapper;
 import com.formanova.user.service.UserService;
 import lombok.AccessLevel;
@@ -11,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.function.Consumer;
 
 @Configuration
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
@@ -22,7 +22,7 @@ public class MessageProcessorConfig {
     private final UserMapper userMapper;
 
     @Bean
-    public Consumer<Event<Object, UserDto>> messageProcessor() {
+    public Consumer<Event<?, ?>> messageProcessor() {
         return event -> {
             log.debug("Process message created at {}...", event.getEventCreatedAt());
 
@@ -36,7 +36,7 @@ public class MessageProcessorConfig {
              */
             switch (event.getEventType()) {
                 case CREATE -> {
-                    UserDto userDto = event.getData();
+                    UserRegistrationDto userDto = (UserRegistrationDto) event.getData();
                     log.debug("Save user: {}", userDto);
                     userService.save(userMapper.toEntity(userDto))
                             .block();

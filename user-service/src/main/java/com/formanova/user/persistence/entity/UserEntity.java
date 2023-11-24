@@ -63,6 +63,7 @@ public class UserEntity {
 
     public static class Builder {
 
+        private final Long id;
         private final String email;
         private final String password;
         private final String firstName;
@@ -73,7 +74,8 @@ public class UserEntity {
         private String country;
         private String city;
 
-        public Builder(String email, String password, String firstName, String lastName, LocalDate birthDate) {
+        public Builder(Long id, String email, String password, String firstName, String lastName, LocalDate birthDate) {
+            this.id = id;
             this.email = email;
             this.password = password;
             this.firstName = firstName;
@@ -102,7 +104,7 @@ public class UserEntity {
         }
 
         public UserEntity build() {
-            return new UserEntity(null, null, true,
+            return new UserEntity(id, null, true,
                     email, password, firstName, lastName, birthDate, paymentCards, phoneNumber, country, city);
         }
     }

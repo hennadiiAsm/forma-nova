@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -23,7 +24,7 @@ public class UserServiceApplication {
 //    @Bean
     ApplicationRunner applicationRunner(UserService userService, PaymentCardMapper paymentCardMapper) {
         return args -> {
-            UserEntity build = new UserEntity.Builder("a@z", "aaa", "A", "B", LocalDate.EPOCH)
+            UserEntity build = new UserEntity.Builder(null, "a@z", "aaa", "A", "B", LocalDate.EPOCH)
                     .setPaymentCards(
                             Set.of(paymentCardMapper.toEntity(new PaymentCardDto("123", LocalDate.MAX, "1234")))
                     )
@@ -31,11 +32,6 @@ public class UserServiceApplication {
                     .setCountry("asd")
                     .setCity("asd")
                     .build();
-
-//            Uni.createFrom().item(build)
-//                            .invoke(c -> System.out.println(c))
-//                            .convert().with(UniReactorConverters.toMono())
-//                            .subscribe(System.out::println);
 
             userService.save(build)
                     .subscribe();

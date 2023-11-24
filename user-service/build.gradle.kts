@@ -29,8 +29,8 @@ dependencyManagement {
 
 dependencies {
 
-//	implementation(project(":common"))
-	implementation(files("../common/build/libs/common-0.0.1-SNAPSHOT.jar"))
+	implementation(project(":common"))
+//	implementation(files("../common/build/libs/common-0.0.1-SNAPSHOT.jar"))
 
 	// Spring support
 	implementation("org.springframework.boot:spring-boot-starter-webflux")

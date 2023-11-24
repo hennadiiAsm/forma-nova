@@ -3,6 +3,12 @@ server:
   error:
     include-message: always
 
+network:
+  user-service:
+    scheme: http
+    domain: localhost
+    port: 8080
+
 spring.cloud.stream:
   default-binder: kafka
 #  default.contentType: application/json
@@ -16,24 +22,9 @@ spring.cloud.stream:
         partition-key-expression: headers['partitionKey']
         partition-count: 2
 
-#    recommendations-out-0:
-#      destination: recommendations
-#      producer:
-#        required-groups: auditGroup
-#    reviews-out-0:
-#      destination: reviews
-#      producer:
-#        required-groups: auditGroup
-
 spring.cloud.stream.kafka.binder:
   brokers: 127.0.0.1
   defaultBrokerPort: 9092
-
-#spring.rabbitmq:
-#  host: 127.0.0.1
-#  port: 5672
-#  username: guest
-#  password: guest
 
 logging:
   level:
@@ -41,3 +32,28 @@ logging:
 
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"
+
+---
+
+spring.config.activate.on-profile: docker
+
+server:
+  port: 8080
+  error:
+    include-message: always
+
+network:
+  user-service:
+    scheme: http
+    domain: user-service
+    port: 8080
+
+spring.kafka.bootstrap-servers: kafka:9092
+
+spring:
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          replication-factor: 1

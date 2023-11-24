@@ -15,7 +15,9 @@ public class UserMapper {
     private final PaymentCardMapper cardMapper;
 
     public UserDto toDto(UserEntity entity) {
-        return new UserDto(entity.getEmail(),
+        return new UserDto(
+                entity.getId(),
+                entity.getEmail(),
                 entity.getPassword(),
                 entity.getFirstName(),
                 entity.getLastName(),

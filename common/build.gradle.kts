@@ -22,13 +22,9 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.5"))
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.6"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-
-//    // Lombok
-//    compileOnly("org.projectlombok:lombok")
-//    implementation("org.projectlombok:lombok")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
@@ -36,7 +32,3 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-//
-//tasks.bootBuildImage {
-//    builder.set("paketobuildpacks/builder-jammy-base:latest")
-//}

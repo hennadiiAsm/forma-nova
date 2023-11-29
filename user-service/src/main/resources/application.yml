@@ -1,11 +1,12 @@
 server:
   port: 8080
-  error:
-    include-message: always
+
+spring.devtools.livereload.enabled: false
 
 logging:
   level:
-    root: INFO
+    root: info
+    web: debug
 
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"
@@ -14,30 +15,3 @@ management.endpoints.web.exposure.include: "*"
 
 spring.config.activate.on-profile: docker
 
-spring.cloud.stream:
-  default-binder: kafka
-  #  default.contentType: application/json
-  bindings:
-    messageProcessor-in-0:
-      destination: users
-      content-type: application/json
-      group: usersGroup
-      consumer:
-        max-attempts: 3
-        backOffInitialInterval: 500
-        backOffMaxInterval: 1000
-        backOffMultiplier: 2.0
-  #            partitioned: true
-  #            instance-index: 0
-  kafka:
-    binder:
-      brokers: 127.0.0.1
-      #      defaultBrokerPort: 9092
-      configuration:
-        port: 9092
-    bindings:
-      messageProcessor-in-0:
-        consumer:
-          enable-dlq: true
-  function:
-    definition: messageProcessor

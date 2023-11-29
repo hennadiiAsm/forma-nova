@@ -1,7 +1,7 @@
 server:
   port: 8081
-  error:
-    include-message: always
+
+spring.devtools.livereload.enabled: false
 
 network:
   user-service:
@@ -28,7 +28,8 @@ spring.cloud.stream.kafka.binder:
 
 logging:
   level:
-    root: INFO
+    root: info
+    web: debug
 
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"
@@ -39,8 +40,6 @@ spring.config.activate.on-profile: docker
 
 server:
   port: 8080
-  error:
-    include-message: always
 
 network:
   user-service:

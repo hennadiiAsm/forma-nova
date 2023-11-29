@@ -16,7 +16,7 @@ import reactor.core.scheduler.Schedulers;
 
 @Service
 @Slf4j
-public class IntegrationClient {
+public class UserServiceClient {
 
     private final WebClient webClient;
 
@@ -24,7 +24,7 @@ public class IntegrationClient {
 
     private final String userServiceUrl;
 
-    IntegrationClient(WebClient.Builder webClientBuilder,
+    UserServiceClient(WebClient.Builder webClientBuilder,
                       StreamBridge streamBridge,
 
                       @Value("${network.user-service.scheme}") String userServiceScheme,
@@ -55,7 +55,7 @@ public class IntegrationClient {
     public Mono<Void> deleteUserById(Long id) {
 
         return Mono.fromRunnable(() -> {
-            var event = new Event<>(Event.Type.CREATE, id, null);
+            var event = new Event<>(Event.Type.DELETE, id, null);
             sendMessage("users-out-0", event);
         }).subscribeOn(Schedulers.boundedElastic()).then();
     }

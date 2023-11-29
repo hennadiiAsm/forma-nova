@@ -3,7 +3,7 @@ package com.formanova.integration.api.v1.controller;
 
 import com.formanova.common.dto.user.UserPublicDto;
 import com.formanova.common.dto.user.UserRegistrationDto;
-import com.formanova.integration.client.IntegrationClient;
+import com.formanova.integration.client.UserServiceClient;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class UserController {
 
-    private final IntegrationClient integration;
+    private final UserServiceClient integration;
 
 //    @GetMapping
 //    Mono<ResponseEntity<List<UserPrivateDto>>> getUsers(

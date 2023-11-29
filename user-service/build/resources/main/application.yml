@@ -1,11 +1,48 @@
-#server:
-#  port: 8080
-#  error:
-#    include-message: always
-#
+server:
+  port: 8080
+
+spring.devtools.livereload.enabled: false
+
+#spring:
+#  security:
+#    oauth2:
+#      authorizationserver:
+#        client:
+#          oidc-client:
+#            registration:
+#              client-id: "oidc-client"
+#              client-secret: "{noop}secret"
+#              client-authentication-methods:
+#                - "client_secret_basic"
+#              authorization-grant-types:
+#                - "authorization_code"
+#                - "refresh_token"
+#              redirect-uris:
+#                - "http://127.0.0.1:8081/login/oauth2/code/oidc-client"
+#              post-logout-redirect-uris:
+#                - "http://127.0.0.1:8081/"
+#              scopes:
+#                - "openid"
+#                - "profile"
+#            require-authorization-consent: true
+
+logging:
+  level:
+    root: info
+    web: debug
+    security: debug
+
+management.endpoint.health.show-details: "ALWAYS"
+management.endpoints.web.exposure.include: "*"
+
+---
+
+spring.config.activate.on-profile: docker
+
+eureka.instance.prefer-ip-address: true
 #spring.cloud.stream:
 #  default-binder: kafka
-##  default.contentType: application/json
+#  #  default.contentType: application/json
 #  bindings:
 #    messageProcessor-in-0:
 #      destination: users
@@ -16,12 +53,12 @@
 #        backOffInitialInterval: 500
 #        backOffMaxInterval: 1000
 #        backOffMultiplier: 2.0
-#  #            partitioned: true
-#  #            instance-index: 0
+  #            partitioned: true
+  #            instance-index: 0
 #  kafka:
 #    binder:
 #      brokers: 127.0.0.1
-##      defaultBrokerPort: 9092
+#      #      defaultBrokerPort: 9092
 #      configuration:
 #        port: 9092
 #    bindings:
@@ -30,20 +67,3 @@
 #          enable-dlq: true
 #  function:
 #    definition: messageProcessor
-#
-#management.endpoint.health.show-details: "ALWAYS"
-#management.endpoints.web.exposure.include: "*"
-#
-#logging:
-#  level:
-#    root: info
-##    web: info
-#---
-#spring.config.activate.on-profile: docker
-#
-#spring:
-#  cloud:
-#    stream:
-#      kafka:
-#        binder:
-#          brokers: kafka

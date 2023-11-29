@@ -11,8 +11,6 @@ import org.hibernate.reactive.mutiny.Mutiny;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
-import java.util.Objects;
-
 import static io.smallrye.mutiny.converters.uni.UniReactorConverters.toMono;
 
 @Repository
@@ -23,7 +21,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Mono<UserEntity> findByEmail(String email) {
-        Objects.requireNonNull(email);
         return sessionFactory
                 .withSession(session -> session.find(UserEntity.class, email))
                 .convert().with(toMono());
@@ -31,7 +28,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Mono<UserEntity> findById(Long id) {
-        Objects.requireNonNull(id);
         return sessionFactory
                 .withSession(session -> session.find(UserEntity.class, id))
                 .convert().with(toMono());

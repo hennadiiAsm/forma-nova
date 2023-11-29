@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.6"))
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:3.1.5"))
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-validation")
 

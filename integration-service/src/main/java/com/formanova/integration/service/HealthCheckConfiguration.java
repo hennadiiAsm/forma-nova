@@ -1,6 +1,6 @@
 package com.formanova.integration.service;
 
-import com.formanova.integration.client.IntegrationClient;
+import com.formanova.integration.client.UserServiceClient;
 import org.springframework.boot.actuate.health.CompositeReactiveHealthContributor;
 import org.springframework.boot.actuate.health.ReactiveHealthContributor;
 import org.springframework.boot.actuate.health.ReactiveHealthIndicator;
@@ -14,7 +14,7 @@ import java.util.Map;
 public class HealthCheckConfiguration {
 
     @Bean
-    ReactiveHealthContributor coreServices(IntegrationClient integration) {
+    ReactiveHealthContributor coreServices(UserServiceClient integration) {
 
         final Map<String, ReactiveHealthIndicator> registry = new HashMap<>();
 

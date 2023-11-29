@@ -30,14 +30,15 @@ dependencyManagement {
 dependencies {
 
 	implementation(project(":common"))
-//	implementation(files("../common/build/libs/common-0.0.1-SNAPSHOT.jar"))
 
 	// Spring support
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
-//	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+//	implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka")
+
+//	implementation("org.springframework.boot:spring-boot-starter-oauth2-authorization-server")
 //	implementation("org.springframework.boot:spring-boot-starter-hateoas")
 //	implementation("org.springframework.boot:spring-boot-starter-security")
 //	implementation("org.springframework.session:spring-session-core")
@@ -59,7 +60,7 @@ dependencies {
 	// Testing support
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
-	testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder")
+//	testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder")
 //	testImplementation("org.springframework.kafka:spring-kafka-test")
 //	testImplementation("org.springframework.security:spring-security-test")
 

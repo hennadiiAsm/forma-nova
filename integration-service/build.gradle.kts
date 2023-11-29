@@ -37,7 +37,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-//    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 //    implementation("org.springframework.boot:spring-boot-starter-hateoas")
 //    implementation("org.springframework.boot:spring-boot-starter-security")
 //    implementation("org.springframework.session:spring-session-core")

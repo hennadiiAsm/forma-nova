@@ -72,7 +72,7 @@ public class UserMapper {
                 dto.getBirthDate())
                 .setPaymentCards(
                         dto.getPaymentCards()
-                                .parallelStream()
+                                .stream()
                                 .map(cardMapper::toEntity)
                                 .collect(Collectors.toSet())
                 )

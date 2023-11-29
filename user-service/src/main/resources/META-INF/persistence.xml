@@ -12,9 +12,6 @@
         <properties>
 
             <!-- PostgreSQL -->
-            <!-- Inside docker, I'm forced to use IP addressing instead of "host.docker.internal"
-            because of the following issue:
-            https://github.com/docker/for-win/issues/12673 -->
             <property name="jakarta.persistence.jdbc.url"
                                                           value="jdbc:postgresql://localhost:5432/analysis"/>
 <!--                                                          value="jdbc:postgresql://192.168.65.254:5432/analysis"/>-->
@@ -40,7 +37,7 @@
                       value="update"/>
 
             <!-- (Optional) If true, automatically create schemas and catalogs -->
-<!--            <property name="jakarta.persistence.create-database-schemas" value=""/>-->
+           <!-- <property name="jakarta.persistence.create-database-schemas" value=""/> -->
 
             <!-- (Optional) If metadata-then-script or script-then-metadata, execute an additional SQL script when exported tables and sequences -->
 <!--            <property name="jakarta.persistence.schema-generation.create-source" value=""/>-->
@@ -85,6 +82,8 @@
             <!-- Automatic schema export -->
             <property name="jakarta.persistence.schema-generation.database.action"
                       value="update"/>
+
+            <property name="jakarta.persistence.create-database-schemas" value="true"/>
 
             <!-- SQL statement logging -->
             <property name="hibernate.show_sql" value="true"/>

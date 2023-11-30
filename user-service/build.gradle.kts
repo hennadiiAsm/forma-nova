@@ -21,9 +21,11 @@ repositories {
 	mavenCentral()
 }
 
+extra["springCloudVersion"] = "2022.0.4"
+
 dependencyManagement {
 	imports {
-		mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.3")
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
 	}
 }
 
@@ -49,7 +51,10 @@ dependencies {
 	implementation("org.hibernate.reactive:hibernate-reactive-core:2.0.6.Final")
 	implementation("io.smallrye.reactive:mutiny-reactor:2.5.1")
 	implementation("io.smallrye.reactive:mutiny-zero-flow-adapters:1.0.0")
+
+	// JpaModelgen
 	compileOnly("org.hibernate.orm:hibernate-jpamodelgen")
+	annotationProcessor("org.hibernate.orm:hibernate-jpamodelgen")
 
 	// Lombok
 	compileOnly("org.projectlombok:lombok")
@@ -68,4 +73,8 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.bootBuildImage {
+	builder.set("paketobuildpacks/builder-jammy-base:latest")
 }

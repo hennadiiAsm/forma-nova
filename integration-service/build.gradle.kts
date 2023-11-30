@@ -21,16 +21,11 @@ repositories {
     mavenCentral()
 }
 
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.3")
-    }
-}
+extra["springCloudVersion"] = "2022.0.4"
 
 dependencies {
 
     implementation(project(":common"))
-//    implementation(files("../common/build/libs/common-0.0.1-SNAPSHOT.jar"))
 
     // Spring support
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -49,10 +44,16 @@ dependencies {
     // Testing support
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder")
+//    testImplementation("org.springframework.cloud:spring-cloud-stream-test-binder")
 //    testImplementation("org.springframework.kafka:spring-kafka-test")
 //    testImplementation("org.springframework.security:spring-security-test")
 
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
 }
 
 tasks.withType<Test> {

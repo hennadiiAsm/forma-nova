@@ -1,14 +1,15 @@
 package com.formanova.integration.api.v1.controller;
 
 
-import com.formanova.common.dto.user.UserPublicDto;
-import com.formanova.common.dto.user.UserRegistrationDto;
-import com.formanova.integration.client.UserServiceClient;
-import jakarta.validation.Valid;
+import com.formanova.integration.model.UserPublicProfile;
+import com.formanova.integration.service.UserProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 
@@ -17,25 +18,12 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class UserController {
 
-    private final UserServiceClient integration;
-
-//    @GetMapping
-//    Mono<ResponseEntity<List<UserPrivateDto>>> getUsers(
-//            @RequestParam(name = "k", required = false) String keyword,
-//            @RequestParam(name = "s", required = false) String sortOrder) {
-//
-//    }
+    private final UserProfileService userProfileService;
 
     @GetMapping("/{id}")
-    Mono<ResponseEntity<UserPublicDto>> getById(@PathVariable Long id) {
-        return integration.getUserById(id);
-    }
-
-    @PostMapping
-    Mono<ResponseEntity<Void>> register(@RequestBody @Valid Mono<UserRegistrationDto> userDto) {
-        return userDto
-                .flatMap(integration::createUser)
-                .then(Mono.fromCallable(() -> ResponseEntity.accepted().build()));
+    Mono<? extends ResponseEntity<? extends UserPublicProfile>> getById(@PathVariable Long id) {
+        return userProfileService.getUserProfileById(id)
+                .map(ResponseEntity::ok);
     }
 
 }

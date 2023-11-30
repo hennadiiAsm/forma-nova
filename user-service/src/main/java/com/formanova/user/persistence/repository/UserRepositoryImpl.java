@@ -2,9 +2,8 @@ package com.formanova.user.persistence.repository;
 
 
 import com.formanova.user.persistence.entity.UserEntity;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaDelete;
-import jakarta.persistence.criteria.Root;
+import com.formanova.user.persistence.entity.UserEntity_;
+import jakarta.persistence.criteria.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.reactive.mutiny.Mutiny;
@@ -52,14 +51,14 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Mono<Void> deleteById(Long id) {
 
-        CriteriaBuilder cb = this.sessionFactory.getCriteriaBuilder();
-        CriteriaDelete<UserEntity> criteriaDelete = cb.createCriteriaDelete(UserEntity.class);
-        Root<UserEntity> root = criteriaDelete.from(UserEntity.class);
+        CriteriaBuilder cb = sessionFactory.getCriteriaBuilder();
+        CriteriaUpdate<UserEntity> update = cb.createCriteriaUpdate(UserEntity.class);
+        Root<UserEntity> root = update.from(UserEntity.class);
 
-        criteriaDelete.where(cb.equal(root.get("id"), id));
+        update.set(root.get(UserEntity_.enabled), false).where(cb.equal(root.get(UserEntity_.id), id));
 
         return sessionFactory
-                .withTransaction((session, tx) -> session.createQuery(criteriaDelete)
+                .withTransaction((session, tx) -> session.createQuery(update)
                         .executeUpdate())
                 .convert().with(toMono())
                 .then();

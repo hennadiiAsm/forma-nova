@@ -2,9 +2,12 @@ package com.formanova.common.dto.user;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.formanova.common.dto.SkillDto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor(onConstructor_={@JsonCreator})
@@ -27,6 +30,8 @@ public class UserPublicDto {
     private String country;
 
     private String city;
+
+    private Set<SkillDto> skills;
 
     public UserPublicDto(String email,
                          String firstName,

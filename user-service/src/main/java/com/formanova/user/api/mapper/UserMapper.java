@@ -16,6 +16,8 @@ public class UserMapper {
 
     private final PaymentCardMapper cardMapper;
 
+    private final SkillMapper skillMapper;
+
     public UserPublicDto toPublicDto(UserEntity entity) {
         return new UserPublicDto(
                 entity.getEmail(),
@@ -23,7 +25,12 @@ public class UserMapper {
                 entity.getLastName(),
                 entity.getPhoneNumber(),
                 entity.getCountry(),
-                entity.getCity());
+                entity.getCity(),
+                entity.getSkills()
+                        .stream()
+                        .map(skillMapper::toDto)
+                        .collect(Collectors.toSet())
+        );
     }
 
     public UserPrivateDto toPrivateDto(UserEntity entity) {
@@ -36,8 +43,12 @@ public class UserMapper {
                 entity.getCity(),
                 entity.getBirthDate(),
                 entity.getPaymentCards()
-                        .parallelStream()
+                        .stream()
                         .map(cardMapper::toDto)
+                        .collect(Collectors.toSet()),
+                entity.getSkills()
+                        .stream()
+                        .map(skillMapper::toDto)
                         .collect(Collectors.toSet())
                 );
     }
@@ -53,7 +64,8 @@ public class UserMapper {
                         dto.getCountry(),
                         dto.getCity(),
                         dto.getBirthDate(),
-                        dto.getPaymentCards()
+                        dto.getPaymentCards(),
+                        dto.getSkills()
                 ),
                 dto.getPassword()
         );
@@ -74,6 +86,12 @@ public class UserMapper {
                         dto.getPaymentCards()
                                 .stream()
                                 .map(cardMapper::toEntity)
+                                .collect(Collectors.toSet())
+                )
+                .setSkills(
+                        dto.getSkills()
+                                .stream()
+                                .map(skillMapper::toEntity)
                                 .collect(Collectors.toSet())
                 )
                 .setPhoneNumber(dto.getPhoneNumber())

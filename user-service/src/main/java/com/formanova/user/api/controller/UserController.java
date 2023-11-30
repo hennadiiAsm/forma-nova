@@ -1,7 +1,7 @@
-package com.formanova.user.api.v1.controller;
+package com.formanova.user.api.controller;
 
 
-import com.formanova.common.dto.user.UserPrivateDto;
+import com.formanova.common.dto.user.UserPublicDto;
 import com.formanova.common.dto.user.UserRegistrationDto;
 import com.formanova.user.api.mapper.UserMapper;
 import com.formanova.user.persistence.entity.UserEntity;
@@ -18,7 +18,7 @@ import java.net.URI;
 
 
 @RestController
-@RequestMapping(path = "/api/v1/users")
+@RequestMapping(path = "/users")
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public class UserController {
 
@@ -27,9 +27,9 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping("/{id}")
-    Mono<ResponseEntity<UserPrivateDto>> getById(@PathVariable Long id) {
+    Mono<? extends ResponseEntity<? extends UserPublicDto>> getById(@PathVariable Long id) {
 
-        return userService.getById(id)
+        return userService.getUserById(id)
                 .map(userMapper::toPrivateDto)
                 .map(ResponseEntity::ok)
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
@@ -42,7 +42,7 @@ public class UserController {
         return userDto
                 .doOnError(Throwable::printStackTrace)
                 .map(userMapper::toEntity)
-                .flatMap(userService::save)
+                .flatMap(userService::saveUser)
                 .map(UserEntity::getId)
                 .map(generatedId -> {
                     URI locationOfNewUser = ucb

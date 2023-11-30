@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "users")
 @Entity
@@ -38,15 +38,12 @@ public class UserEntity {
     private String email;
 
     @NotBlank
-    @Column(nullable = false)
     private String password;
 
     @NotBlank
-    @Column(nullable = false)
     private String firstName;
 
     @NotBlank
-    @Column(nullable = false)
     private String lastName;
 
     @NotNull
@@ -54,6 +51,12 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "holder", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<@Valid PaymentCardEntity> paymentCards;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_skill",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "skill_id")})
+    private Set<@Valid SkillEntity> skills;
 
     private String phoneNumber;
 
@@ -70,6 +73,7 @@ public class UserEntity {
         private final String lastName;
         private final LocalDate birthDate;
         private Set<PaymentCardEntity> paymentCards;
+        private Set<SkillEntity> skills;
         private String phoneNumber;
         private String country;
         private String city;
@@ -85,6 +89,11 @@ public class UserEntity {
 
         public Builder setPaymentCards(Set<PaymentCardEntity> paymentCards) {
             this.paymentCards = paymentCards;
+            return this;
+        }
+
+        public Builder setSkills(Set<SkillEntity> skills) {
+            this.skills = skills;
             return this;
         }
 
@@ -105,7 +114,7 @@ public class UserEntity {
 
         public UserEntity build() {
             return new UserEntity(id, null, true,
-                    email, password, firstName, lastName, birthDate, paymentCards, phoneNumber, country, city);
+                    email, password, firstName, lastName, birthDate, paymentCards, skills, phoneNumber, country, city);
         }
     }
 

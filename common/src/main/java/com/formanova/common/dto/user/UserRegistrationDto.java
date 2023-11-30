@@ -3,6 +3,7 @@ package com.formanova.common.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.formanova.common.dto.PaymentCardDto;
+import com.formanova.common.dto.SkillDto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,9 +37,10 @@ public class UserRegistrationDto extends UserPrivateDto {
                                String city,
                                LocalDate birthDate,
                                Set<PaymentCardDto> paymentCards,
+                               Set<SkillDto> skills,
                                String password) {
 
-        super(email, firstName, lastName, phoneNumber, country, city, birthDate, paymentCards);
+        super(email, firstName, lastName, phoneNumber, country, city, birthDate, paymentCards, skills);
         this.password = password;
     }
 

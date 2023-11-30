@@ -1,13 +1,12 @@
 package com.formanova.integration.client;
 
 import com.formanova.common.Event;
-import com.formanova.common.dto.user.UserPublicDto;
+import com.formanova.common.dto.user.UserPrivateDto;
 import com.formanova.common.dto.user.UserRegistrationDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,24 +23,24 @@ public class UserServiceClient {
 
     private final String userServiceUrl;
 
-    UserServiceClient(WebClient.Builder webClientBuilder,
+    UserServiceClient(WebClient webClient,
                       StreamBridge streamBridge,
 
                       @Value("${network.user-service.scheme}") String userServiceScheme,
                       @Value("${network.user-service.domain}") String userServiceDomain,
                       @Value("${network.user-service.port}") String userServicePort) {
 
-        this.webClient = webClientBuilder.build();
+        this.webClient = webClient;
         this.streamBridge = streamBridge;
 
         this.userServiceUrl = userServiceScheme + "://" + userServiceDomain + ":" + userServicePort;
     }
 
-    public Mono<ResponseEntity<UserPublicDto>> getUserById(Long id) {
+    public Mono<UserPrivateDto> getUserById(Long id) {
 
         return webClient.get().uri(userServiceUrl + "/users/{id}", id)
                 .retrieve()
-                .toEntity(UserPublicDto.class);
+                .bodyToMono(UserPrivateDto.class);
     }
 
     public Mono<Void> createUser(UserRegistrationDto userDto) {

@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 
 spring.devtools.livereload.enabled: false
 
@@ -7,24 +7,27 @@ network:
   user-service:
     scheme: http
     domain: localhost
-    port: 8080
+    port: 8081
+  rating-service:
+    scheme: http
+    domain: localhost
+    port: 8082
 
-spring.cloud.stream:
-  default-binder: kafka
-#  default.contentType: application/json
-  bindings:
-    users-out-0:
-      destination: users
-      content-type: application/json
-      group: usersGroup
-      producer:
-        required-groups: auditGroup
-        partition-key-expression: headers['partitionKey']
-        partition-count: 2
-
-spring.cloud.stream.kafka.binder:
-  brokers: 127.0.0.1
-  defaultBrokerPort: 9092
+#spring.cloud.stream:
+#  default-binder: kafka
+##  default.contentType: application/json
+#  bindings:
+#    users-out-0:
+#      destination: users
+#      content-type: application/json
+#      group: usersGroup
+#      producer:
+#        required-groups: auditGroup
+#        partition-key-expression: headers['partitionKey']
+#        partition-count: 2
+#
+#spring.cloud.stream.kafka.binder:
+#  brokers: 127.0.0.1
 
 logging:
   level:
@@ -43,6 +46,10 @@ server:
 
 network:
   user-service:
+    scheme: http
+    domain: user-service
+    port: 8080
+  rating-service:
     scheme: http
     domain: user-service
     port: 8080

@@ -40,13 +40,13 @@ public class MessageProcessorConfig {
                 case CREATE -> {
                     UserRegistrationDto userDto = (UserRegistrationDto) event.getData();
                     log.debug("Save user: {}", userDto);
-                    userService.save(userMapper.toEntity(userDto))
+                    userService.saveUser(userMapper.toEntity(userDto))
                             .block();
                 }
                 case DELETE -> {
                     Long userId = (Long) event.getKey();
                     log.debug("Delete user with id: {}", userId);
-                    userService.deleteById(userId)
+                    userService.deleteUserById(userId)
                             .block();
                 }
                 default -> {

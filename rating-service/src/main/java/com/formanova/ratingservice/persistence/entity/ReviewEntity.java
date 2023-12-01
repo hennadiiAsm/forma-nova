@@ -33,7 +33,7 @@ public class ReviewEntity {
 
     private long targetId;
 
-    private long skillId;
+    private String skillName; // as well as skill id, since it's the same
 
     private byte grade;
 

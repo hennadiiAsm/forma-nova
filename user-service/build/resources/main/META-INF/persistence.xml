@@ -7,6 +7,7 @@
         <provider>org.hibernate.reactive.provider.ReactivePersistenceProvider</provider>
 
         <class>com.formanova.user.persistence.entity.UserEntity</class>
+        <class>com.formanova.user.persistence.entity.SkillEntity</class>
         <class>com.formanova.user.persistence.entity.PaymentCardEntity</class>
 
         <properties>
@@ -34,7 +35,7 @@
             <!--            If validate, validate the database schema without changing it.-->
             <!--            If update, only export what’s missing in the schema.-->
             <property name="jakarta.persistence.schema-generation.database.action"
-                      value="update"/>
+                      value="drop-and-create"/>
 
             <!-- (Optional) If true, automatically create schemas and catalogs -->
            <!-- <property name="jakarta.persistence.create-database-schemas" value=""/> -->
@@ -61,6 +62,7 @@
         <provider>org.hibernate.reactive.provider.ReactivePersistenceProvider</provider>
 
         <class>com.formanova.user.persistence.entity.UserEntity</class>
+        <class>com.formanova.user.persistence.entity.SkillEntity</class>
         <class>com.formanova.user.persistence.entity.PaymentCardEntity</class>
 
         <properties>

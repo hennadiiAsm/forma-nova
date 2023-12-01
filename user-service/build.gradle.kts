@@ -37,18 +37,21 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
-//	implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka")
+	implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka")
 
 //	implementation("org.springframework.boot:spring-boot-starter-oauth2-authorization-server")
 //	implementation("org.springframework.boot:spring-boot-starter-hateoas")
 //	implementation("org.springframework.boot:spring-boot-starter-security")
 //	implementation("org.springframework.session:spring-session-core")
 
-	// Hibernate-reactive support
+	// PostgreSQL client
 	implementation("io.vertx:vertx-pg-client:4.4.6")
+
+	// Hibernate-reactive support
 	implementation("com.ongres.scram:client:2.1")
 	implementation("org.hibernate.reactive:hibernate-reactive-core:2.0.6.Final")
+
+	// Mutiny-reactor conversion
 	implementation("io.smallrye.reactive:mutiny-reactor:2.5.1")
 	implementation("io.smallrye.reactive:mutiny-zero-flow-adapters:1.0.0")
 

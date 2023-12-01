@@ -13,7 +13,7 @@ public class ReviewMapper {
                 entity.getAuthorId(),
                 entity.getAuthorFirstName(),
                 entity.getAuthorLastName(),
-                entity.getSkillId(),
+                entity.getSkillName(),
                 entity.getGrade(),
                 entity.getTitle(),
                 entity.getContent());

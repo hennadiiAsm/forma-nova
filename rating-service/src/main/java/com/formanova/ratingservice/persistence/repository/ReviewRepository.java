@@ -11,12 +11,10 @@ public interface ReviewRepository extends
         ReactiveCrudRepository<ReviewEntity, Long>,
         ReactiveSortingRepository<ReviewEntity, Long> {
 
-    Flux<ReviewEntity> findByAuthorId(Long authorId);
+    Flux<ReviewEntity> findAllByAuthorId(Long authorId, Pageable pageable);
 
-    Flux<ReviewEntity> findByTargetId(Long targetId, Pageable pageable);
+    Flux<ReviewEntity> findAllByTargetId(Long targetId, Pageable pageable);
 
     Mono<Void> deleteAllByTargetId(Long targetId);
-
-    Flux<ReviewEntity> findAll(Pageable pageable);
 
 }

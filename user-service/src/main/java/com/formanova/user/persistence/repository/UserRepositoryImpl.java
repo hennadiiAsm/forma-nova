@@ -36,14 +36,14 @@ public class UserRepositoryImpl implements UserRepository {
     public Mono<UserEntity> save(UserEntity userEntity) {
         if (userEntity.getId() == null) {
             return sessionFactory
-                    .withSession(session -> session.persist(userEntity)
-                            .chain(session::flush))
+                    .withTransaction(session -> session.persist(userEntity)
+                            .call(session::flush))
                     .convert().with(toMono())
                     .then(Mono.just(userEntity));
         } else {
             return sessionFactory
                     .withSession(session -> session.merge(userEntity)
-                            .onItem().call(session::flush))
+                            .call(session::flush))
                     .convert().with(toMono());
         }
     }

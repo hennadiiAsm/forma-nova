@@ -17,6 +17,8 @@ import reactor.core.scheduler.Schedulers;
 @Slf4j
 public class UserServiceClient {
 
+    private static final String BINDING_NAME = "userService-out-0";
+
     private final WebClient webClient;
 
     private final StreamBridge streamBridge;
@@ -40,14 +42,15 @@ public class UserServiceClient {
 
         return webClient.get().uri(userServiceUrl + "/users/{id}", id)
                 .retrieve()
-                .bodyToMono(UserPrivateDto.class);
+                .bodyToMono(UserPrivateDto.class)
+                .doOnNext(user -> log.debug("Received " + user));
     }
 
     public Mono<Void> createUser(UserRegistrationDto userDto) {
 
         return Mono.fromRunnable(() -> {
             var event = new Event<>(Event.Type.CREATE, null, userDto);
-            sendMessage("users-out-0", event);
+            sendMessage(event);
         }).subscribeOn(Schedulers.boundedElastic()).then();
     }
 
@@ -55,16 +58,16 @@ public class UserServiceClient {
 
         return Mono.fromRunnable(() -> {
             var event = new Event<>(Event.Type.DELETE, id, null);
-            sendMessage("users-out-0", event);
+            sendMessage(event);
         }).subscribeOn(Schedulers.boundedElastic()).then();
     }
 
-    private void sendMessage(String bindingName, Event<?, ?> event) {
-        log.debug("Sending a {} message to {}", event.getEventType(), bindingName);
+    private void sendMessage(Event<?, ?> event) {
+        log.debug("Sending a {} message to {}", event.getEventType(), BINDING_NAME);
         var message = MessageBuilder.withPayload(event)
                 .setHeader("partitionKey", event.getKey())
                 .build();
-        streamBridge.send(bindingName, message);
+        streamBridge.send(BINDING_NAME, message);
     }
 
     public Mono<Health> getUserServiceHealth() {

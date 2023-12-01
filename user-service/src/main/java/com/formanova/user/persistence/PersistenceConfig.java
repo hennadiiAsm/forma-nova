@@ -2,7 +2,6 @@ package com.formanova.user.persistence;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.reactive.mutiny.Mutiny;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,6 @@ import java.util.Map;
 
 
 @Configuration
-@Slf4j
 public class PersistenceConfig {
 
     @Bean
@@ -26,6 +24,8 @@ public class PersistenceConfig {
         EntityManagerFactory emf;
         if (Arrays.stream(activeProfiles).anyMatch("docker"::matches)) {
             persistenceUnitName = "postgresql-container";
+
+            // It's required in order to avoid Netty DNS resolving bug
             String url = "jdbc:postgresql://" + InetAddress.getByName("postgres").getHostAddress() + ":5432/analysis";
             emf = Persistence.createEntityManagerFactory(persistenceUnitName, Map.of("jakarta.persistence.jdbc.url", url));
         } else {

@@ -8,7 +8,7 @@ class UserServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
-//		io.vertx.pgclient.spi.PgDriver
+
 	}
 
 }

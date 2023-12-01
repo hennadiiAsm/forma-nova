@@ -19,12 +19,12 @@ public class ReviewService {
         return reviewRepository.findById(id);
     }
 
-    public Flux<ReviewEntity> getReviewsByAuthorId(Long id) {
-        return reviewRepository.findByAuthorId(id);
+    public Flux<ReviewEntity> getReviewsByAuthorId(Long id, Pageable pageable) {
+        return reviewRepository.findAllByAuthorId(id, pageable);
     }
 
     public Flux<ReviewEntity> getReviewsByTargetId(Long id, Pageable pageable) {
-        return reviewRepository.findByTargetId(id, pageable);
+        return reviewRepository.findAllByTargetId(id, pageable);
     }
 
 }

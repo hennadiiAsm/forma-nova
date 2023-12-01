@@ -1,7 +1,10 @@
 package com.formanova.user.persistence.entity;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -24,5 +27,4 @@ public class SkillEntity {
 
     @Length(min = 2, max = 100)
     private String description;
-
 }

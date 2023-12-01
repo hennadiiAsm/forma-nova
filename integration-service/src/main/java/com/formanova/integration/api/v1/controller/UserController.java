@@ -21,7 +21,7 @@ public class UserController {
     private final UserProfileService userProfileService;
 
     @GetMapping("/{id}")
-    Mono<? extends ResponseEntity<? extends UserPublicProfile>> getById(@PathVariable Long id) {
+    Mono<? extends ResponseEntity<? extends UserPublicProfile>> showById(@PathVariable Long id) {
         return userProfileService.getUserProfileById(id)
                 .map(ResponseEntity::ok);
     }

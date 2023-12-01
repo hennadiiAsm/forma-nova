@@ -1,6 +1,7 @@
 package com.formanova.user.api.messaging;
 
 import com.formanova.common.Event;
+import com.formanova.common.dto.user.UserPublicDto;
 import com.formanova.common.dto.user.UserRegistrationDto;
 import com.formanova.user.api.mapper.UserMapper;
 import com.formanova.user.service.UserService;
@@ -24,7 +25,7 @@ public class MessageProcessorConfig {
     private final UserMapper userMapper;
 
     @Bean
-    public Consumer<Event<?, ?>> messageProcessor() {
+    public Consumer<Event<?, ? extends UserPublicDto>> messageProcessor() {
         return event -> {
             log.debug("Process message created at {}...", event.getEventCreatedAt());
 

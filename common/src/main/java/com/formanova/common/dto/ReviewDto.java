@@ -22,7 +22,7 @@ public class ReviewDto {
 
     private String authorLastName;
 
-    private long skillId;
+    private String skillName; // as well as skill id, since it's the same
 
     private int grade;
 

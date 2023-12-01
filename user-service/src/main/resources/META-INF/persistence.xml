@@ -7,6 +7,7 @@
         <provider>org.hibernate.reactive.provider.ReactivePersistenceProvider</provider>
 
         <class>com.formanova.user.persistence.entity.UserEntity</class>
+        <class>com.formanova.user.persistence.entity.SkillEntity</class>
         <class>com.formanova.user.persistence.entity.PaymentCardEntity</class>
 
         <properties>
@@ -14,7 +15,6 @@
             <!-- PostgreSQL -->
             <property name="jakarta.persistence.jdbc.url"
                                                           value="jdbc:postgresql://localhost:5432/analysis"/>
-<!--                                                          value="jdbc:postgresql://192.168.65.254:5432/analysis"/>-->
 
             <!-- Credentials -->
             <property name="jakarta.persistence.jdbc.user"
@@ -34,10 +34,10 @@
             <!--            If validate, validate the database schema without changing it.-->
             <!--            If update, only export what’s missing in the schema.-->
             <property name="jakarta.persistence.schema-generation.database.action"
-                      value="update"/>
+                      value="drop-and-create"/>
 
             <!-- (Optional) If true, automatically create schemas and catalogs -->
-           <!-- <property name="jakarta.persistence.create-database-schemas" value=""/> -->
+            <property name="jakarta.persistence.create-database-schemas" value="true"/>
 
             <!-- (Optional) If metadata-then-script or script-then-metadata, execute an additional SQL script when exported tables and sequences -->
 <!--            <property name="jakarta.persistence.schema-generation.create-source" value=""/>-->
@@ -61,6 +61,7 @@
         <provider>org.hibernate.reactive.provider.ReactivePersistenceProvider</provider>
 
         <class>com.formanova.user.persistence.entity.UserEntity</class>
+        <class>com.formanova.user.persistence.entity.SkillEntity</class>
         <class>com.formanova.user.persistence.entity.PaymentCardEntity</class>
 
         <properties>
@@ -81,7 +82,7 @@
 
             <!-- Automatic schema export -->
             <property name="jakarta.persistence.schema-generation.database.action"
-                      value="update"/>
+                      value="drop-and-create"/>
 
             <property name="jakarta.persistence.create-database-schemas" value="true"/>
 

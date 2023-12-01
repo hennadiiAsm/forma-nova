@@ -49,7 +49,7 @@ public class UserEntity {
     @NotNull
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "holder", orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "holder", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<@Valid PaymentCardEntity> paymentCards;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

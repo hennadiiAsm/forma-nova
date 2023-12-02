@@ -25,11 +25,6 @@ spring:
             backOffMaxInterval: 1000
             backOffMultiplier: 2.0
 
-logging:
-  level:
-    root: info
-    web: debug
-
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"
 
@@ -37,29 +32,6 @@ management.endpoints.web.exposure.include: "*"
 
 spring.config.activate.on-profile: docker
 
-spring.devtools.livereload.enabled: false
-
 spring:
   kafka:
     bootstrap-servers: kafka:9092
-  cloud:
-    stream:
-      default-binder: kafka
-      kafka:
-        binder:
-          replication-factor: 1
-          brokers: kafka
-      bindings:
-        messageProcessor-in-0:
-          destination: rating-service
-          group: rating-service-group
-          consumer:
-            partitioned: true
-            instanceCount: 1
-            maxAttempts: 3
-            backOffInitialInterval: 500
-            backOffMaxInterval: 1000
-            backOffMultiplier: 2.0
-
-management.endpoint.health.show-details: "ALWAYS"
-management.endpoints.web.exposure.include: "*"

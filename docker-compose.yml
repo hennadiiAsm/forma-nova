@@ -1,18 +1,32 @@
 services:
+  integration-service:
+    container_name: integration-service
+    build: integration-service
+    mem_limit: 512m
+    ports:
+      - "8080:8080"
+    networks:
+      - integration
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      kafka:
+        condition: service_started
+
   user-service:
     container_name: user-service
     build: user-service
     mem_limit: 512m
     networks:
-#      - integration
+      - integration
       - user-postgres
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       postgres:
         condition: service_healthy
-#      kafka:
-#        condition: service_started
+      kafka:
+        condition: service_started
 
   postgres:
     container_name: postgres
@@ -30,47 +44,45 @@ services:
       timeout: 2s
       retries: 60
 
-#  integration-service:
-#    container_name: integration-service
-#    build: integration-service
-#    mem_limit: 512m
-#    ports:
-#      - "8080:8080"
-#    networks:
-#      - integration
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    depends_on:
-#      kafka:
-#        condition: service_started
+  rating-service:
+    container_name: rating-service
+    build: rating-service
+    mem_limit: 512m
+    networks:
+      - integration
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      kafka:
+        condition: service_started
 
-#  kafka:
-#    container_name: kafka
-#    image: bitnami/kafka:3.5
-#    restart: always
-#    mem_limit: 1024m
-#    networks:
-#      - integration
-#    environment:
-#      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-#      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
-#      - KAFKA_BROKER_ID=1
-#      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
-#    depends_on:
-#      - zookeeper
+  kafka:
+    container_name: kafka
+    image: confluentinc/cp-kafka:7.3.1
+    restart: always
+    mem_limit: 1024m
+    networks:
+      - integration
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_BROKER_ID=1
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    depends_on:
+      - zookeeper
 
-#  zookeeper:
-#    container_name: zookeeper
-#    image: zookeeper:3.9
-#    restart: always
-#    mem_limit: 512m
-#    networks:
-#      - integration
-#    environment:
-#      - ZOOKEEPER_CLIENT_PORT=2181
+  zookeeper:
+    container_name: zookeeper
+    image: confluentinc/cp-zookeeper:7.3.1
+    restart: always
+    mem_limit: 512m
+    networks:
+      - integration
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=2181
 
 networks:
   user-postgres:
     name: user-postgres
-#  integration:
-#    name: integration
+  integration:
+    name: integration

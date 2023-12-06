@@ -51,7 +51,7 @@ public class MessageProcessorConfig {
                             .block();
                 }
                 default -> {
-                    String errorMessage = "Incorrect event type: " + event.getEventType() + ", expected a CREATE or DELETE event";
+                    String errorMessage = "Incorrect event type: " + event.getEventType();
                     log.warn(errorMessage);
                     throw new RuntimeException(errorMessage);
                 }

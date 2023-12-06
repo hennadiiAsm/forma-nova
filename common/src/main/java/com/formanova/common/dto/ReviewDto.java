@@ -13,9 +13,10 @@ import java.time.Instant;
 public class ReviewDto {
 
     @EqualsAndHashCode.Include
+    private Long id;
+
     private Instant createdAt;
 
-    @EqualsAndHashCode.Include
     private long authorId;
 
     private String authorFirstName;

@@ -2,6 +2,7 @@ package com.formanova.integration.service;
 
 import com.formanova.common.dto.ReviewDto;
 import com.formanova.common.dto.user.UserPrivateDto;
+import com.formanova.common.dto.user.UserRegistrationDto;
 import com.formanova.integration.client.ReviewServiceClient;
 import com.formanova.integration.client.UserServiceClient;
 import com.formanova.integration.model.UserPrivateProfile;
@@ -30,10 +31,28 @@ public class UserProfileService {
                         userServiceClient.getUserById(id),
                         reviewServiceClient.getReviewsByTargetId(id).collectList()
                 )
-                .doOnError(ex -> log.warn("getUserProfileById failed: {}", ex.toString()));
+                .doOnError(ex -> log.warn("getUserProfileById with id={} failed: {}", id, ex.toString()));
+    }
+
+    public Mono<Void> addUserProfile(UserRegistrationDto registrationDto) {
+
+        return userServiceClient.createUser(registrationDto)
+                .doOnError(ex -> log.warn("addUserProfile with payload={} failed: {}", registrationDto, ex.toString()));
+    }
+
+    public Mono<Void> deleteUserProfileById(Long id) {
+
+        return Mono.zip(
+                values -> "",
+                userServiceClient.deleteUserById(id),
+                reviewServiceClient.deleteReviewsByTargetId(id)
+                )
+                .doOnError(ex -> log.warn("deleteUserProfileById with id={} failed: {}", id, ex.toString()))
+                .then();
     }
 
     private UserPublicProfile createUserProfile(UserPrivateDto userDto, Set<ReviewDto> reviews) {
+
         UserPublicProfile publicProfile = new UserPublicProfile(
                 userDto.getEmail(),
                 userDto.getFirstName(),

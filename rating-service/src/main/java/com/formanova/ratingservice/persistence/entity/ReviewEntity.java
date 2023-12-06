@@ -35,7 +35,7 @@ public class ReviewEntity {
 
     private String skillName; // as well as skill id, since it's the same
 
-    private byte grade;
+    private int grade;
 
     private String title;
 
